@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Hello World · 创意融合视界</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* 主容器 - 卡片式精致布局 */
+        .master-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 8px 18px rgba(0,0,0,0.05);
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        /* 上下分区优雅: 上方问候区块 + 下方展示区 */
+        .hero-greeting {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed rgba(100, 116, 139, 0.25);
+        }
+
+        .hello-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,240,0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.4rem 1.4rem;
+            border-radius: 100px;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .wave-icon {
+            font-size: 1.8rem;
+            animation: gentleWave 1.6s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes gentleWave {
+            0% { transform: rotate(0deg) translateY(0px); }
+            25% { transform: rotate(12deg) translateY(-3px);}
+            75% { transform: rotate(-6deg) translateY(2px);}
+            100% { transform: rotate(0deg) translateY(0px);}
+        }
+
+        .greeting-title {
+            font-size: clamp(3rem, 8vw, 5.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #2d3a5e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 4px 12px rgba(0,0,0,0.04);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .greeting-sub {
+            font-size: 1.1rem;
+            color: #334155;
+            font-weight: 500;
+            background: rgba(255,255,255,0.6);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 双栏布局: 左侧经典+信息，右侧iframe卡片 */
+        .content-split {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .info-panel {
+            flex: 1.1;
+            min-width: 240px;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(4px);
+            border-radius: 1.8rem;
+            padding: 1.5rem 1.4rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: transform 0.2s;
+        }
+
+        .info-panel:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.8);
+        }
+
+        .panel-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid #3b82f6;
+            padding-left: 12px;
+        }
+
+        .hello-quote {
+            background: #eef2ff;
+            padding: 1rem;
+            border-radius: 1.2rem;
+            margin: 1.2rem 0;
+            font-style: italic;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .code-snip {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-family: 'Fira Code', 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #1e293b;
+        }
+
+        .design-frame {
+            flex: 2;
+            min-width: 300px;
+            background: transparent;
+            border-radius: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        /* iframe 精致卡片效果 */
+        .iframe-wrapper {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 0.6rem;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        .iframe-wrapper:hover {
+            box-shadow: 0 24px 42px -12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.01);
+        }
+
+        iframe {
+            border-radius: 1rem;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 800 / 450;
+            display: block;
+            background: #f9fafb;
+            border: none;
+        }
+
+        /* 动态时钟 + 小工具 */
+        .live-meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.8rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            gap: 12px;
+        }
+
+        .clock-card {
+            background: #eef2ff;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #0c4a6e;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .interactive-btn {
+            background: #1e293b;
+            border: none;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .interactive-btn:hover {
+            background: #0f172a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #475569;
+            margin-top: 1.8rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 860px) {
+            body {
+                padding: 1rem;
+            }
+            .master-container {
+                padding: 1rem;
+            }
+            .content-split {
+                flex-direction: column;
+            }
+            .iframe-wrapper {
+                padding: 0.4rem;
+            }
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="master-container">
+    <!-- 头部问候区：经典的Hello World 气质 -->
+    <div class="hero-greeting">
+        <div class="hello-badge">
+            <span class="wave-icon">👋🌍</span>
+            <span style="font-weight:500;">greetings, developer</span>
+        </div>
+        <h1 class="greeting-title">Hello, World!</h1>
+        <div class="greeting-sub">✨ 从经典问候到设计灵感 · 这一刻联结创造 ✨</div>
+    </div>
+
+    <!-- 核心内容：左侧描述 + 右侧Figma设计嵌入 (依照用户提供的iframe) -->
+    <div class="content-split">
+        <!-- 左侧面板：Hello World 文化、趣味信息 -->
+        <div class="info-panel">
+            <div class="panel-title">
+                📖 关于「Hello World」
+                <span style="font-size: 0.9rem;">⚡</span>
+            </div>
+            <p style="margin-bottom: 0.8rem; color: #1e293b; line-height: 1.4;">
+                《Hello, World!》是程序员的浪漫起点，象征着探索与创新的第一步。  
+                它不仅是一行代码，更是每次创造旅程的纯粹初心。
+            </p>
+            <div class="hello-quote">
+                “你好，世界。我准备好创造，改变，并留下印记。”
+            </div>
+            <div class="code-snip">
+                <span style="color:#93c5fd;">// 最经典的问候示例</span><br>
+                <span style="color:#facc15;">console</span>.<span style="color:#7dd3fc;">log</span>(<span style="color:#bef264;">"Hello World 🌟"</span>);<br>
+                <span style="color:#94a3b8;">print</span>(<span style="color:#bef264;">"你好，世界"</span>) 
+            </div>
+            <ul class="feature-list">
+                <li>🎯 <strong>1972年</strong> · 首次出现在《C语言程序设计》</li>
+                <li>🚀 <strong>跨语言传统</strong> · 从Python到Rust，永续传承</li>
+                <li>💡 <strong>右侧展示</strong> · Figma设计概念「2026前瞻」</li>
+                <li>⚡ <strong>实时时钟</strong> · 见证此刻的灵光</li>
+            </ul>
+            <!-- 增加一个微妙的探索按钮 + 呼应设计 -->
+            <button class="interactive-btn" id="inspireBtn" style="background: #2563eb; margin-top: 4px;">✨ 设计灵感彩蛋 ✨</button>
+        </div>
+
+        <!-- 右侧区域：完全按照需求嵌入给定的iframe (Figma设计稿) -->
+        <div class="design-frame">
+            <div class="iframe-wrapper">
+                <iframe 
+                    style="border: 1px solid rgba(0, 0, 0, 0.1);" 
+                    width="800" 
+                    height="450" 
+                    src="https://embed.figma.com/design/Lc9kuH9pi8JN6ZSsgphcOp/2026?node-id=22-144&embed-host=share" 
+                    allowfullscreen
+                    loading="lazy"
+                    title="Figma 设计稿 - 2026 创意概念"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+                ></iframe>
+            </div>
+            <!-- 轻微辅助说明，提升交互感 -->
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px; gap: 10px;">
+                <span style="font-size: 0.7rem; background: rgba(0,0,0,0.05); padding: 2px 10px; border-radius: 30px;">🎨 Figma 设计 | 节点 22-144</span>
+                <span style="font-size: 0.7rem; background: rgba(0,0,0,0.05); padding: 2px 10px; border-radius: 30px;">🖌️ 2026 概念板</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部栏：实时时钟 + 趣味小工具 和额外的Hello World 互动 -->
+    <div class="live-meta">
+        <div class="clock-card" id="liveClockDisplay">
+            🕒 同步世界时间中...
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="interactive-btn" id="helloConsoleBtn" style="background: #334155;">💬 控制台问候</button>
+            <button class="interactive-btn" id="copyHelloBtn" style="background: #0f172a;">📋 复制经典代码</button>
+        </div>
+    </div>
+    <div class="footer-note">
+        🧩 「 Hello World 」 传承 · 每次打开都是创造力的起点   |   嵌入设计稿致敬交互与美学融合
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 1. 动态实时时钟 (精确到秒，本地化)
+        function updateClockUI() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            const weekday = weekdays[now.getDay()];
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? '下午' : '上午';
+            let displayHour = hours % 12;
+            displayHour = displayHour === 0 ? 12 : displayHour;
+            const timeStr = `${ampm} ${displayHour}:${minutes}:${seconds}`;
+            const dateStr = `${year}.${month}.${date} (${weekday})`;
+            const clockElem = document.getElementById('liveClockDisplay');
+            if (clockElem) {
+                clockElem.innerHTML = `📅 ${dateStr}  🕘 ${timeStr}`;
+            }
+        }
+        updateClockUI();
+        setInterval(updateClockUI, 1000);
+
+        // 2. 控制台问候按钮 - 经典 Hello World 控制台输出 (有趣多重)
+        const consoleBtn = document.getElementById('helloConsoleBtn');
+        if (consoleBtn) {
+            consoleBtn.addEventListener('click', () => {
+                console.clear();
+                console.log("%c✨ Hello World! ✨", "color: #f97316; font-size: 18px; font-weight: bold; background: #0f172a; padding: 4px 12px; border-radius: 20px;");
+                console.log("%c🌍 你好世界，设计即代码，代码即艺术。", "color: #3b82f6; font-size: 14px;");
+                console.log("🎉 你正在浏览融合 Figma 设计稿的 HTML 页面 – 经典与现代并存。");
+                console.log("📌 右侧 iframe 嵌入来自 Figma 2026 设计项目 (节点 22-144)");
+                // 额外友好提示
+                const styleToast = (msg) => {
+                    let toast = document.createElement('div');
+                    toast.innerText = msg;
+                    toast.style.position = 'fixed';
+                    toast.style.bottom = '30px';
+                    toast.style.left = '50%';
+                    toast.style.transform = 'translateX(-50%)';
+                    toast.style.background = '#0f172ae6';
+                    toast.style.backdropFilter = 'blur(12px)';
+                    toast.style.color = '#f1f5f9';
+                    toast.style.padding = '8px 18px';
+                    toast.style.borderRadius = '40px';
+                    toast.style.fontSize = '0.85rem';
+                    toast.style.fontWeight = '500';
+                    toast.style.zIndex = '9999';
+                    toast.style.border = '1px solid #ffffff30';
+                    toast.style.pointerEvents = 'none';
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.2s';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.style.opacity = '1', 10);
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => toast.remove(), 300);
+                    }, 2000);
+                };
+                styleToast('✅ 控制台已输出 Hello World 经典问候 🎉');
+            });
+        }
+
+        // 3. 复制经典代码片段按钮 (现代clipboard API)
+        const copyBtn = document.getElementById('copyHelloBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', async () => {
+                const codeSnippet = `// Hello World 经典示例\nconsole.log("Hello, World!");\nprint("Hello World")  # Python\n#include <iostream>\nint main() { std::cout << "Hello World"; return 0; }`;
+                try {
+                    await navigator.clipboard.writeText(codeSnippet);
+                    // 临时提示
+                    const toastMsg = document.createElement('div');
+                    toastMsg.innerText = '📋 代码片段已复制！分享 Hello World 精神';
+                    toastMsg.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#1e293b; color:#e2e8f0; padding:8px 18px; border-radius:32px; font-size:0.8rem; z-index:10000; backdrop-filter:blur(10px); border:1px solid #94a3b8; pointer-events:none; opacity:0; transition:opacity 0.2s';
+                    document.body.appendChild(toastMsg);
+                    setTimeout(() => toastMsg.style.opacity = '1', 10);
+                    setTimeout(() => {
+                        toastMsg.style.opacity = '0';
+                        setTimeout(() => toastMsg.remove(), 300);
+                    }, 1800);
+                } catch (err) {
+                    console.warn("复制失败，但初心依旧", err);
+                    alert('手动复制也是爱：Hello World 永存心中');
+                }
+            });
+        }
+
+        // 4. 设计灵感彩蛋按钮 (呼应左侧按钮 - inspireBtn)
+        const inspireBtn = document.getElementById('inspireBtn');
+        if (inspireBtn) {
+            inspireBtn.addEventListener('click', () => {
+                // 一个小型动画弹窗或视觉反馈
+                const figmaFrame = document.querySelector('.iframe-wrapper');
+                if (figmaFrame) {
+                    figmaFrame.style.transition = 'all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+                    figmaFrame.style.transform = 'scale(1.01)';
+                    figmaFrame.style.boxShadow = '0 25px 40px -12px rgba(37,99,235,0.3)';
+                    setTimeout(() => {
+                        figmaFrame.style.transform = '';
+                        figmaFrame.style.boxShadow = '';
+                    }, 500);
+                }
+                // 精美的控制台消息+toast
+                const designToast = document.createElement('div');
+                designToast.innerText = '🎨 设计灵感｜右侧 Figma 展现2026前瞻概念 ✨';
+                designToast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#2563ebdd; color:white; padding:8px 16px; border-radius:40px; font-weight:500; font-size:0.85rem; z-index:10001; backdrop-filter:blur(8px); pointer-events:none; opacity:0; transition:opacity 0.2s';
+                document.body.appendChild(designToast);
+                setTimeout(() => designToast.style.opacity = '1', 10);
+                setTimeout(() => {
+                    designToast.style.opacity = '0';
+                    setTimeout(() => designToast.remove(), 300);
+                }, 2000);
+                console.log("%c🎨 设计彩蛋触发！Figma 设计稿为你带来 2026 风格灵感", "color: #3b82f6; font-size: 13px;");
+            });
+        }
+
+        // 5. 额外彩蛋: 用户点击右侧 iframe 区域时控制台提示优雅注意 (不干扰用户)
+        const iframeElement = document.querySelector('iframe');
+        if (iframeElement) {
+            // 无法直接监听 iframe 内部点击因为跨域，但可以包装父级点击旁白
+            const wrapperDiv = document.querySelector('.iframe-wrapper');
+            if (wrapperDiv) {
+                wrapperDiv.addEventListener('click', (e) => {
+                    // 如果点到了iframe区域本身 (不可见细节，仅做趣味)
+                    console.log("🖱️ 你正在与 Figma 设计稿互动 — Hello World 视角下的设计探索");
+                });
+            }
+        }
+
+        // 6. 处理所有class="interactive-btn" 的统一涟漪 (可选轻量)
+        const allBtns = document.querySelectorAll('.interactive-btn');
+        allBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                let ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'rippleAnim 0.4s linear';
+                ripple.style.width = '40px';
+                ripple.style.height = '40px';
+                ripple.style.marginLeft = '-20px';
+                ripple.style.marginTop = '-20px';
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 400);
+            });
+        });
+        // 增加简单的动画定义 (如果不存在则动态添加)
+        if (!document.querySelector('#rippleStyle')) {
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'rippleStyle';
+            styleSheet.innerText = `@keyframes rippleAnim { 0% { transform: scale(0); opacity: 0.6; } 100% { transform: scale(6); opacity: 0; } }`;
+            document.head.appendChild(styleSheet);
+        }
+
+        // 页面完全加载后额外在控制台输出轻快问候 (Hello World情怀)
+        window.addEventListener('load', () => {
+            console.log("%c🌟 Hello World 页面已优雅呈现 · 右侧 Figma 设计稿无缝融合 🌟", "color: #0f172a; background: #e2e8f0; padding: 4px 10px; border-radius: 20px;");
+            // 小彩蛋: 标题闪烁友好提醒 (极短)
+            let originalTitle = document.title;
+            let count = 0;
+            const titleInterval = setInterval(() => {
+                if (count >= 4) {
+                    clearInterval(titleInterval);
+                    document.title = originalTitle;
+                    return;
+                }
+                document.title = count % 2 === 0 ? '✨ Hello World ✨' : '🎨 设计·代码共鸣';
+                count++;
+            }, 500);
+            setTimeout(() => {
+                clearInterval(titleInterval);
+                document.title = originalTitle;
+            }, 2200);
+        });
+    })();
+</script>
+</body>
+</html>
